@@ -1,0 +1,12 @@
+{
+    "name": "automate-all-the-things",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RogueDudes/automate-all-the-things"
+    },
+    "devDependencies": {
+        "jade": "~1.3.0",
+        "reveal.js": "~2.6.2"
+    }
+}
