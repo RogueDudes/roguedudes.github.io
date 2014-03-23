@@ -26,7 +26,7 @@ html(lang="en")
       .reveal h4 { font-size: 1.5em; }
       .reveal h5 { font-size: 1.2em; }
 
-      .reveal .white { color: #fff; }
+      .reveal .light { color: #fff; }
       .reveal .big { font-size: 1.9em; }
 
       .reveal pre.inline { box-shadow: none; }
@@ -42,11 +42,88 @@ html(lang="en")
   body
     div.reveal
       div.slides
-        section(data-background="#000000")
-          h1.white Automate<br>ALL THE THINGS!!!
+        section(data-transition="none")
+          p: img(class="inline" src="assets/images/automate.jpg" style="min-width: 100%;")
+
+        section
+
+          section(data-background="#000000")
+            h1.light Кои?
+
+          section
+            p
+              a(href="http://gsamokovarov.com"): img(class="inline spin" src="assets/images/genadi.png")
+
+          section
+            h2 Стан{,имир} Ангело{в,ff}
+            br
+            ul
+              li Пише код.
+              li Обича бяло вино <strike>(без мярка)</strike>.
+              li Не търпи глупави хора.
+
+          section(data-background="#000000")
+            h1.light Защо?
+
+          section
+            p Генади мрази да конфигурира сървъри.
+            p Станимир мрази да конфигурира сървъри.
+            p.fragment Генади и Станимир <strong>много</strong> мразят да конфигурират сървъри.
+
+          section
+            p: img(class="inline" src="http://420placehold.it/meme/400-400")
+            h1 IT SUCKS BIG TIME!!!
+            small (mandatory Caps Lock slide)
+
+          section(data-background="#000000")
+            h1.light Какво <u>НЕ Е</u> тази презентация?
+
+          section
+            h2 Няма да говорим за build&nbsp;tools.
+            br
+            p Това не е презентация за:
+            ul
+              li make, rake
+              li grunt
+              li: em whatever you<br>crazy kids use<br>these days&hellip;
+
+        section
+
+          section(data-background="#000000")
+            h1.light Защо?
+
+          section(data-background="#000000")
+            h2.light Мит: Автоматизация само за големи проекти
+
+          section
+            p: img(class="inline" src="http://420placehold.it/meme/400-400" style="min-width: 100%;")
+            aside.notes.
+              Не, не е, нашето демо ще 3 реда код на Python.
+              Дори малък проект носи със себе си яку dependencies, от OS-ниво до софтуер...
+
+          section
+            h2 Защо? (continued&hellip;)
+            br
+            p.fragment Когато машината и dependencies еволюират, много по-лесно е да ги документираш.
+            br
+            p.fragment Автоматизацията е като документация за машината, особено когато имате повече от една машина.
+
+          section
+            h2 Защо? (continued 2&hellip;)
+            br
+            p.fragment Repeatability, няма разминаване в средите
+            p.fragment Генчо работи с Py3, Станчо с Py2
+            p.fragment: em Ама при мен работи?!
+
+          section
+            p: img(class="inline" src="assets/images/flip.png" style="min-width: 100%;")
 
         section(data-background="#000000")
-          h1.white Fin.
+          h1.light Demo.
+          p.light: small Дано работи, demo Gods be kind to us&hellip;
+
+        section(data-background="#000000")
+          h1.light Fin.
 
     script(src="vendor/reveal.js/lib/js/head.min.js")
     script(src="vendor/reveal.js/js/reveal.js")
