@@ -10,6 +10,7 @@ html(lang="en")
 
     link(rel="stylesheet", href="vendor/reveal.js/css/reveal.css")
     link(rel="stylesheet", href="vendor/reveal.js/css/theme/simple.css")
+    link(rel="stylesheet", href="vendor/reveal.js/lib/css/zenburn.css")
 
     style.
       .reveal,
@@ -48,49 +49,51 @@ html(lang="en")
         section
 
           section(data-background="#000000")
-            h1.light Кои?
+            h1.light Кои сме ние?
 
           section
+            h2 Генади Самоковаров
+            h3 <a href="http://github.com/gsamokovarov">@gsamokovarov</a>
+            br
             p
               a(href="http://gsamokovarov.com"): img(class="inline spin" src="assets/images/genadi.png")
 
           section
             h2 Стан{,имир} Ангело{в,ff}
+            h3 <a href="http://github.com/StanAngeloff">@StanAngeloff</a>
             br
             ul
               li Пише код.
-              li Обича бяло вино <strike>(без мярка)</strike>.
+              li Обича <strike>бяло</strike> червено вино <strike>(без мярка)</strike>.
               li Не търпи глупави хора.
 
           section(data-background="#000000")
-            h1.light Защо?
-
-          section
-            p Генади мрази да конфигурира сървъри.
-            p Станимир мрази да конфигурира сървъри.
-            p.fragment Генади и Станимир <strong>много</strong> мразят да конфигурират сървъри.
-
-          section
-            p: img(class="inline" src="http://420placehold.it/meme/400-400")
-            h1 IT SUCKS BIG TIME!!!
-            small (mandatory Caps Lock slide)
-
-          section(data-background="#000000")
-            h1.light Какво <u>НЕ Е</u> тази презентация?
+            h1.light Какво <u>няма</u> да има в нашата презентация?
 
           section
             h2 Няма да говорим за build&nbsp;tools.
             br
             p Това не е презентация за:
             ul
-              li make, rake
-              li grunt
-              li: em whatever you<br>crazy kids use<br>these days&hellip;
+              li <code>make</code>, <code>rake</code>
+              li <code>grunt</code>
+            br
+            br
+            p: em whatever you crazy kids use these days&hellip;
 
         section
 
           section(data-background="#000000")
-            h1.light Защо?
+            h1.light Защо автоматизация?
+
+          section
+            p Генади мрази да конфигурира сървъри.
+            p Станимир мрази да конфигурира сървъри.
+            p.fragment Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.
+
+          section
+            p: img(class="inline" src="http://420placehold.it/meme/400-400")
+            h1 IT SUCKS BIG TIME!!!
 
           section(data-background="#000000")
             h2.light Мит: Автоматизация само за големи проекти
@@ -99,31 +102,105 @@ html(lang="en")
             p: img(class="inline" src="http://420placehold.it/meme/400-400" style="min-width: 100%;")
             aside.notes.
               Не, не е, нашето демо ще 3 реда код на Python.
-              Дори малък проект носи със себе си яку dependencies, от OS-ниво до софтуер...
+              Дори малък проект носи със себе си много dependencies, от OS-ниво до софтуер...
 
           section
-            h2 Защо? (continued&hellip;)
+            h1 Защо автоматизация? <small>(продължение&hellip;)</small>
             br
-            p.fragment Когато машината и dependencies еволюират, много по-лесно е да ги документираш.
+            p.fragment Когато машината и dependencies еволюират, много <nobr>по-лесно</nobr> е да ги документираш.
             br
-            p.fragment Автоматизацията е като документация за машината, особено когато имате повече от една машина.
+            p.fragment Автоматизацията е като документация за машината&hellip; особено когато имате повече от една машина.
 
           section
-            h2 Защо? (continued 2&hellip;)
+            h1 Защо автоматизация? <small>(продължение&hellip;)</small>
             br
             p.fragment Repeatability, няма разминаване в средите
-            p.fragment Генчо работи с Py3, Станчо с Py2
-            p.fragment: em Ама при мен работи?!
+            p.fragment Генади работи с Python3, Стан с Python2
+            p.fragment: cite: em Ама при мен работи?!
 
           section
             p: img(class="inline" src="assets/images/flip.png" style="min-width: 100%;")
 
-        section(data-background="#000000")
-          h1.light Demo.
-          p.light: small Дано работи, demo Gods be kind to us&hellip;
+        section
+
+          section(data-background="#000000")
+            h1.light Време за демо
+
+          section(data-background="#000000")
+            h2.light Puppet
+
+          section(data-background="#000000")
+            h2.light Ansible
+
+          section(data-background="#000000")
+            <script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="4" async></script>
+
+        section
+
+          section(data-background="#000000")
+            h1.light Какво автоматизирахме?
+
+          section
+            h2 Анатомия на едно <nobr>Python приложение</nobr>
+            pre
+              code.python(data-trim).
+                def application(env, start_response):
+                    start_response('200 OK', [('Content-Type', 'text/html')])
+                    return [b"Hello Rogue!"]
+
+          section
+            ul
+              li Nginx (from PPA)
+              li Python 3.2, <code>pip</code>
+              li uWSGI (application server)
+              li Upstart jobs
+
+          section
+            h3 А преди това&hellip;
+            ul
+              li Ubuntu 12.04, x64
+              li SSH server
+              li Reasonable security
+              li Date/time, locale, etc.
+              li <code>build-essential</code>
+            br
+            br
+            p.fragment &hellip;за три реда код.
+
+          section
+            p: img(class="inline" src="http://420placehold.it/meme/400-400" style="min-width: 100%;")
+
+        section
+
+          section(data-background="#000000")
+            h1.light Оправдания
+
+          section
+            p: cite: em Ще отнеме много време да се направи.
+
+          section
+            p: cite: em Не е моя работа, има си devops, да се оправят.
+
+          section
+            p: cite: em Ще си ползвам Heroku-то, там всичко работи.
 
         section(data-background="#000000")
-          h1.light Fin.
+          h1.light Въпроси &nbsp;&amp;&nbsp; Отговори
+
+          aside.notes
+            ul
+              li
+                strong Защо не Bash скриптове?
+                br
+                p Голяма болка, особено когато скриптът стане 1, 000+ реда spaghetti code.
+                br
+                p Idempotence е важен, това в Bash е ръчна задача и трябва вие да я предвидите.
+                p Ако имате вече голямо library, започнете като го автоматизирате, но не оставяйте нещата до там.
+              li
+                strong Защо не Chef?
+                br
+                p Нищо лично, но нямаме опит с него, вероятно е cool.
+
 
     script(src="vendor/reveal.js/lib/js/head.min.js")
     script(src="vendor/reveal.js/js/reveal.js")
