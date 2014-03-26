@@ -40,6 +40,10 @@ html(lang="en")
 
       .reveal .progress span { background: #666; }
 
+      .reveal .code-split { overflow: hidden; }
+      .reveal .code-split .left { float: left; width: 49.5%; }
+      .reveal .code-split .right { float: right; width: 49.5%; }
+
   body
     div.reveal
       div.slides
@@ -169,6 +173,32 @@ html(lang="en")
 
           section
             p: img(class="inline" src="http://420placehold.it/meme/400-400" style="min-width: 100%;")
+
+        section
+
+          section(data-background="#000000")
+            h1.light Време за код
+
+          section
+            h2 Инсталиране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: 'Add PPA for stable releases'
+                      apt_repository:
+                        repo='ppa:nginx/stable'
+                        update_cache=true
+
+                    - name: 'Install packages'
+                      apt:
+                        pkg=nginx
+                        state=latest
+              div.right
+                pre
+                  code.ruby(data-trim).
+                    def fn()
+                    end
 
         section
 
