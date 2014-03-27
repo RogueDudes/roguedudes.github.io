@@ -135,6 +135,10 @@ html(lang="en")
 
           section(data-background="#000000")
             h2.light Ansible
+            p.light <big>★</big> 5, 276 stars
+            p.light <big>⟳</big> 9, 851 commits
+            p.light <big>&nbsp;</big> 35 releases
+            p.light <big>&nbsp;</big> 644 contributors
 
           section(data-background="#000000")
             <script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="4" async></script>
@@ -145,7 +149,7 @@ html(lang="en")
             h1.light Какво автоматизирахме?
 
           section
-            h2 Анатомия на едно <nobr>Python приложение</nobr>
+            h2 Едно &ldquo;малко&rdquo; <nobr>Python приложение</nobr>
             pre
               code.python(data-trim).
                 def application(env, start_response):
@@ -200,10 +204,30 @@ html(lang="en")
                     def fn()
                     end
 
+          section
+            h2 Конфигурация
+            div.code-split.fragment
+              div.left
+                pre
+                  code(data-trim).
+                    roles/nginx/defaults/main.yml
+                    group_vars/webservers
+                    inventory/servers.ini
+                    Local Facts
+                    Playbook
+                    Environment
+                    Command-line
+                p Много източници, много варианти за предефиниране.
+              div.right
+                pre
+                  code.ruby(data-trim).
+                    def fn()
+                    end
+
         section
 
           section(data-background="#000000")
-            h1.light Оправдания
+            h1.light Оправдания <small><nobr>(да не автоматизираме)</nobr></small>
 
           section
             p: cite: em Ще отнеме много време да се направи.
