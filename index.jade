@@ -132,6 +132,10 @@ html(lang="en")
 
           section(data-background="#000000")
             h2.light Puppet
+            p.light <big>★</big> 1, 971 stars
+            p.light <big>⟳</big> 15688 commits
+            p.light <big>&nbsp;</big> 276 releases
+            p.light <big>&nbsp;</big> 274 contributors
 
           section(data-background="#000000")
             h2.light Ansible
@@ -200,9 +204,9 @@ html(lang="en")
                         state=latest
               div.right
                 pre
-                  code.ruby(data-trim).
-                    def fn()
-                    end
+                  code.puppet(data-trim).
+                    apt::ppa { 'ppa:nginx/stable': }
+                    -> package { 'nginx': }
 
           section
             h2 Конфигурация
