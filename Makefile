@@ -5,6 +5,9 @@ JADE = ./node_modules/.bin/jade
 index.html: index.jade
 	@$(JADE) index.jade $@
 
+watch:
+	@watch -n0.25 make index.html
+
 dependencies:
 	@npm install .
 
