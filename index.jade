@@ -205,14 +205,110 @@ html(lang="en")
                       apt:
                         pkg=nginx
                         state=latest
+
               div.right
                 pre
                   code.puppet(data-trim).
                     apt::ppa { 'ppa:nginx/stable': }
-                    -> package { 'nginx': }
+
+                    -> package { 'nginx':
+                      ensure => latest
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Create site configuration
+                      sudo: true
+                      template: >
+                        src={{ item }}
+                        dest=/etc/nginx/sites-available/{{ nginx_site_name }}
+                      with_first_found:
+                        - files: [nginx.conf.j2]
+                          paths: ../../../host_files/{{ inventory_hostname }}/
+                        - files: [nginx.conf.j2]
+                          paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
+                        - files: [site.conf.j2]
+                          paths: ../templates/
+                      notify: restart nginx
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/nginx/sites-enabled/default':
+                        ensure => absent;
+
+                      "/etc/nginx/sites-enabled/${site_name}":
+                        ensure => link,
+                        target => "/etc/nginx/sites-available/${site_name}";
+
+                      "/etc/nginx/sites-available/${site_name}":
+                        content => template('nginx/site.conf.erb')
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Disable default site
+                      sudo: true
+                      file: >
+                        path=/etc/nginx/sites-enabled/default
+                        state=absent
+                      notify: restart nginx
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/nginx/sites-enabled/default':
+                        ensure => absent;
+
+                      "/etc/nginx/sites-enabled/${site_name}":
+                        ensure => link,
+                        target => "/etc/nginx/sites-available/${site_name}";
+
+                      "/etc/nginx/sites-available/${site_name}":
+                        content => template('nginx/site.conf.erb')
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Enable custom site
+                      sudo: true
+                      file: >
+                        path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
+                        src=/etc/nginx/sites-available/{{ nginx_site_name }}
+                        state=link
+                      notify: restart nginx
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/nginx/sites-enabled/default':
+                        ensure => absent;
+
+                      "/etc/nginx/sites-enabled/${site_name}":
+                        ensure => link,
+                        target => "/etc/nginx/sites-available/${site_name}";
+
+                      "/etc/nginx/sites-available/${site_name}":
+                        content => template('nginx/site.conf.erb')
+                    }
 
           section
-            h2 Конфигурация
+            h2 Източници на Конфигурация
             div.code-split.fragment
               div.left
                 pre
@@ -227,9 +323,10 @@ html(lang="en")
                 p Много източници, много варианти за предефиниране.
               div.right
                 pre
-                  code.ruby(data-trim).
-                    def fn()
-                    end
+                  code(data-trim).
+                    Hiera
+                    Facts (Ruby, Environment)
+                    Global Variables?
 
           section
             h2 И още малко&hellip;

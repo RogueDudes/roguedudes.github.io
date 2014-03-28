@@ -41,16 +41,80 @@
 - name: 'Install packages'
   apt:
     pkg=nginx
-    state=latest</code></pre></div><div class="right"><pre><code data-trim class="puppet">apt::ppa { 'ppa:nginx/stable': }
--> package { 'nginx': }
-</code></pre></div></div></section><section><h2>Конфигурация</h2><div class="code-split fragment"><div class="left"><pre><code data-trim>roles/nginx/defaults/main.yml
+    state=latest
+    </code></pre></div><div class="right"><pre><code data-trim class="puppet">apt::ppa { 'ppa:nginx/stable': }
+
+-> package { 'nginx':
+  ensure => latest
+}
+</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create site configuration
+  sudo: true
+  template: >
+    src={{ item }}
+    dest=/etc/nginx/sites-available/{{ nginx_site_name }}
+  with_first_found:
+    - files: [nginx.conf.j2]
+      paths: ../../../host_files/{{ inventory_hostname }}/
+    - files: [nginx.conf.j2]
+      paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
+    - files: [site.conf.j2]
+      paths: ../templates/
+  notify: restart nginx
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+  '/etc/nginx/sites-enabled/default':
+    ensure => absent;
+    
+  "/etc/nginx/sites-enabled/${site_name}":
+    ensure => link,
+    target => "/etc/nginx/sites-available/${site_name}";
+    
+  "/etc/nginx/sites-available/${site_name}":
+    content => template('nginx/site.conf.erb')
+}
+</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Disable default site
+  sudo: true
+  file: >
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+  '/etc/nginx/sites-enabled/default':
+    ensure => absent;
+    
+  "/etc/nginx/sites-enabled/${site_name}":
+    ensure => link,
+    target => "/etc/nginx/sites-available/${site_name}";
+    
+  "/etc/nginx/sites-available/${site_name}":
+    content => template('nginx/site.conf.erb')
+}
+</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Enable custom site
+  sudo: true
+  file: >
+    path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
+    src=/etc/nginx/sites-available/{{ nginx_site_name }}
+    state=link
+  notify: restart nginx
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+  '/etc/nginx/sites-enabled/default':
+    ensure => absent;
+    
+  "/etc/nginx/sites-enabled/${site_name}":
+    ensure => link,
+    target => "/etc/nginx/sites-available/${site_name}";
+    
+  "/etc/nginx/sites-available/${site_name}":
+    content => template('nginx/site.conf.erb')
+}
+</code></pre></div></div></section><section><h2>Източници на Конфигурация</h2><div class="code-split fragment"><div class="left"><pre><code data-trim>roles/nginx/defaults/main.yml
 group_vars/webservers
 inventory/servers.ini
 Local Facts
 Playbook
 Environment
-Command-line</code></pre><p>Много източници, много варианти за предефиниране.</p></div><div class="right"><pre><code data-trim class="ruby">def fn()
-end
+Command-line</code></pre><p>Много източници, много варианти за предефиниране.</p></div><div class="right"><pre><code data-trim>Hiera
+Facts (Ruby, Environment)
+Global Variables?
 </code></pre></div></div></section><section><h2>И още малко&hellip;</h2><ul><li class="fragment"><p>Libraries / Repositories with re-usable code</p><p class="fragment">Нож с две остриета.</p></li><li class="fragment">Secure password &amp; secret management</li></ul></section></section><section><section data-background="#000000"><h1 class="light">Оправдания <small><nobr>(да не автоматизираме)</nobr></small></h1></section><section><p><cite><em>Ще отнеме много време да се направи.</em></cite></p></section><section><p><cite><em>Не е моя работа, има си devops, да се оправят.</em></cite></p></section><section><p><cite><em>Ще си ползвам Heroku-то, там всичко работи.</em></cite></p></section></section><section data-background="#000000"><h1 class="light">Въпроси &nbsp;&amp;&nbsp; Отговори</h1><aside class="notes"><ul><li><strong>Защо не Bash скриптове?</strong><br><p>Голяма болка, особено когато скриптът стане 1, 000+ реда spaghetti code.</p><br><p>Idempotence е важен, това в Bash е ръчна задача и трябва вие да я предвидите.</p><p>Ако имате вече голямо library, започнете като го автоматизирате, но не оставяйте нещата до там.</p></li><li><strong>Защо не Chef?</strong><br><p>Нищо лично, но нямаме опит с него, вероятно е cool.</p></li></ul></aside></section></div></div><script src="vendor/reveal.js/lib/js/head.min.js"></script><script src="vendor/reveal.js/js/reveal.js"></script><script>Reveal.initialize({
   controls: false,
   progress: true,
