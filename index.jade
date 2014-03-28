@@ -190,7 +190,209 @@ html(lang="en")
           section(data-background="#000000")
             h1.light Време за код
 
-          section
+          section(data-transition="none")
+            h2 Конфигуриране на Python
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Install packages
+                      sudo: true
+                      apt: >
+                        pkg={{ item }}
+                        state=present
+                      with_items:
+                        - 'python{{ python_version }}'
+                        - 'python{{ python_version }}-dev'
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    package { ["python${version}", "python${version}-dev"]: }
+
+                    -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
+                      path   => ['/usr/bin', '/bin'],
+                      unless => "which pip 2>&1 1>/dev/null"
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Python
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Check if pip is installed
+                      command: >
+                        which {{ pip_executable }}
+                      register: pip_installed
+                      changed_when: false
+                      ignore_errors: true
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    package { ["python${version}", "python${version}-dev"]: }
+
+                    -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
+                      path   => ['/usr/bin', '/bin'],
+                      unless => "which pip 2>&1 1>/dev/null"
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Python
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Install pip
+                      sudo: true
+                      shell: >
+                        wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | {{ python_executable }}
+                      when: pip_installed | failed
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    package { ["python${version}", "python${version}-dev"]: }
+
+                    -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
+                      path   => ['/usr/bin', '/bin'],
+                      unless => "which pip 2>&1 1>/dev/null"
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на uWSGI
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Insall uWSGI
+                      sudo: true
+                      pip: >
+                        executable={{ pip_executable }}
+                        name=uwsgi
+                        state=present
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    package { 'uwsgi':
+                      provider => 'pip',
+                      require  => Package['build-essential']
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на uWSGI
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Install Upstart script for uWSGI Emperor
+                      sudo: true
+                      template: >
+                        src=uwsgi.conf.j2
+                        dest=/etc/init/uwsgi.conf
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/init/uwsgi.conf':
+                        source => 'puppet:///modules/uwsgi/uwsgi.conf';
+
+                      ['/etc/uwsgi', '/etc/uwsgi/vassals']:
+                        ensure => directory;
+
+                      "/etc/uwsgi/vassals/${vassal_name}.ini":
+                        content => template('uwsgi/vassal.ini.erb'),
+                        notify  => Service['uwsgi'];
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на uWSGI
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Create uWSGI Emperor configuration directory
+                      sudo: true
+                      file: >
+                        path=/etc/uwsgi/vassals/
+                        state=directory
+                        recurse=yes
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/init/uwsgi.conf':
+                        source => 'puppet:///modules/uwsgi/uwsgi.conf';
+
+                      ['/etc/uwsgi', '/etc/uwsgi/vassals']:
+                        ensure => directory;
+
+                      "/etc/uwsgi/vassals/${vassal_name}.ini":
+                        content => template('uwsgi/vassal.ini.erb'),
+                        notify  => Service['uwsgi'];
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на uWSGI
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Create vassal configuration
+                      sudo: true
+                      template: >
+                        src={{ item }}
+                        dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
+                      with_first_found:
+                        - files: [uwsgi.ini.j2]
+                          paths: ../../../host_files/{{ inventory_hostname }}/
+                        - files: [uwsgi.ini.j2]
+                          paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
+                        - files: [vassal.ini.j2]
+                          paths: ../templates/
+                      notify: restart uwsgi
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/init/uwsgi.conf':
+                        source => 'puppet:///modules/uwsgi/uwsgi.conf';
+
+                      ['/etc/uwsgi', '/etc/uwsgi/vassals']:
+                        ensure => directory;
+
+                      "/etc/uwsgi/vassals/${vassal_name}.ini":
+                        content => template('uwsgi/vassal.ini.erb'),
+                        notify  => Service['uwsgi'];
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на uWSGI
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Start uWSGI Emperor
+                      sudo: true
+                      service: >
+                        name=uwsgi
+                        state=started
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    service { 'uwsgi':
+                      ensure  => running,
+                      enable  => true,
+                      require => [Package['uwsgi'], File['/etc/init/uwsgi.conf']]
+                    }
+
+          section(data-transition="none")
             h2 Инсталиране на Nginx
             div.code-split
               div.left
@@ -305,6 +507,27 @@ html(lang="en")
 
                       "/etc/nginx/sites-available/${site_name}":
                         content => template('nginx/site.conf.erb')
+                    }
+
+          section(data-transition="none")
+            h2 Конфигуриране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Start nginx
+                      sudo: true
+                      service: >
+                        name=nginx
+                        state=started
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    service { 'nginx':
+                      ensure  => running,
+                      enable  => true,
+                      require => Package['nginx']
                     }
 
           section
