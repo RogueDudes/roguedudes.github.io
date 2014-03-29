@@ -152,23 +152,12 @@ html(lang="en")
             p.fragment Генади работи с Python3, Стан с Python2
             p.fragment: cite: em Ама при мен работи?!
 
-          section(data-transition="none")
+          section
             p: img(class="inline" src="assets/images/flip.png" style="min-width: 100%;")
 
-        section
-
-          section(data-background="#000000").genadi
+        section(data-transition="none")
+          section(data-background="#000000" data-transition="none").stan
             h1.light Време за демо
-
-          section(data-background="#000000").genadi
-            h2.light Puppet
-            p.light <big>★</big> 1, 971 stars
-            p.light <big>⟳</big> 15688 commits
-            p.light <big>&nbsp;</big> 276 releases
-            p.light <big>&nbsp;</big> 274 contributors
-
-          section(data-background="#000000").genadi
-            <script type="text/javascript" src="https://asciinema.org/a/8502.js" id="asciicast-8502" data-size="medium" data-speed="2" async></script>
 
           section(data-background="#000000").stan
             h2.light Ansible
@@ -178,7 +167,17 @@ html(lang="en")
             p.light <big>&nbsp;</big> 644 contributors
 
           section(data-background="#000000").stan
-            <script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="4" async></script>
+            <script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="16" async></script>
+
+          section(data-background="#000000").genadi
+            h2.light Puppet
+            p.light <big>★</big> 1, 971 stars
+            p.light <big>⟳</big> 15688 commits
+            p.light <big>&nbsp;</big> 276 releases
+            p.light <big>&nbsp;</big> 274 contributors
+
+          section(data-background="#000000").genadi
+            <script type="text/javascript" src="https://asciinema.org/a/8502.js" id="asciicast-8502" data-size="medium" data-speed="8" async></script>
 
         section
 
@@ -217,10 +216,10 @@ html(lang="en")
 
         section
 
-          section(data-background="#000000")
+          section(data-background="#000000").genadi
             h1.light Време за код
 
-          section(data-transition="none")
+          section(data-transition="none").genadi
             h2 Конфигуриране на Python
             div.code-split
               div.left
@@ -262,7 +261,7 @@ html(lang="en")
                       unless => "which pip 2>&1 1>/dev/null"
                     }
 
-          section(data-transition="none")
+          section(data-transition="none").stan
             h2 Конфигуриране на uWSGI
             div.code-split
               div.left
@@ -289,7 +288,7 @@ html(lang="en")
                       notify: restart uwsgi
 
                     - name: Start uWSGI Emperor
-                      service: name=uwsgi state=started
+                      service: name=uwsgi state=started enabled=yes
 
               div.right
                 pre
@@ -319,7 +318,7 @@ html(lang="en")
                       require => [Package['uwsgi'], File['/etc/init/uwsgi.conf']]
                     }
 
-          section(data-transition="none")
+          section(data-transition="none").stan
             h2 Инсталиране на Nginx
             div.code-split
               div.left
@@ -347,7 +346,54 @@ html(lang="en")
                       ensure => latest
                     }
 
-          section(data-transition="none")
+          section(data-transition="none").stan
+            h2 Конфигуриране на Nginx
+            div.code-split
+              div.left
+                pre
+                  code.yml(data-trim).
+                    - name: Create site configuration
+                      template: >
+                        src=site.conf.j2
+                        dest=/etc/nginx/sites-available/{{ nginx_site_name }}
+                      notify: restart nginx
+
+                    - name: Disable default site
+                      file: >
+                        path=/etc/nginx/sites-enabled/default
+                        state=absent
+                      notify: restart nginx
+
+                    - name: Enable custom site
+                      file: >
+                        path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
+                        src=/etc/nginx/sites-available/{{ nginx_site_name }}
+                        state=link
+                      notify: restart nginx
+
+              div.right
+                pre
+                  code.puppet(data-trim).
+                    file {
+                      '/etc/nginx/sites-enabled/default':
+                        require => Package['nginx'],
+                        notify  => Service['nginx'],
+                        ensure  => absent;
+
+                      "/etc/nginx/sites-enabled/${site_name}":
+                        require => Package['nginx'],
+                        notify  => Service['nginx'],
+                        ensure  => link,
+                        target  => "/etc/nginx/sites-available/${site_name}";
+
+                      "/etc/nginx/sites-available/${site_name}":
+                        require => Package['nginx'],
+                        notify  => Service['nginx'],
+                        content => template('nginx/site.conf.erb')
+                    }
+
+
+          section(data-transition="none").genadi
             h2 Конфигуриране на Nginx
             div.code-split
               div.left
@@ -393,7 +439,7 @@ html(lang="en")
                     }
 
 
-          section(data-transition="none")
+          section(data-transition="none").genadi
             h2 Конфигуриране на Nginx
             div.code-split
               div.left
@@ -403,6 +449,7 @@ html(lang="en")
                       service: >
                         name=nginx
                         state=started
+                        enabled=yes
 
               div.right
                 pre
@@ -413,7 +460,7 @@ html(lang="en")
                       require => Package['nginx']
                     }
 
-          section
+          section.stan
             h2 Източници на Конфигурация
             div.code-split.fragment
               div.left
@@ -422,19 +469,20 @@ html(lang="en")
                     roles/nginx/defaults/main.yml
                     group_vars/webservers
                     inventory/servers.ini
+                    Modules (Amazon, DO)
                     Local Facts
                     Playbook
                     Environment
                     Command-line
-                p Много източници, много варианти за предефиниране.
               div.right
                 pre
                   code(data-trim).
                     Hiera
-                    Facts (Ruby, Environment)
+                    Facts
+                    Environment
                     Global Variables?
 
-          section
+          section.genadi
             h2 И още малко&hellip;
             ul
               li.fragment
@@ -444,16 +492,19 @@ html(lang="en")
 
         section
 
-          section(data-background="#000000")
-            h1.light Оправдания <small><nobr>(да не автоматизираме)</nobr></small>
+          section(data-background="#000000").genadi
+            h1.light Оправдания<br><small><nobr>(да не автоматизираме)</nobr></small>
 
-          section
+          section.genadi
             p: cite: em Ще отнеме много време да се направи.
 
-          section
+          section.genadi
             p: cite: em Не е моя работа, има си devops, да се оправят.
 
-          section
+          section.stan
+            p: img(class="inline" src="assets/images/is_it_worth_the_time.png" style="min-width: 100%;")
+
+          section.stan
             p: cite: em Ще си ползвам Heroku-то, там всичко работи.
 
         section(data-background="#000000")
