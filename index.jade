@@ -80,7 +80,7 @@ html(lang="en")
               li Обича <strike>бяло</strike> червено вино <strike>(без мярка)</strike>.
               li Не търпи глупави хора.
 
-          section(data-background="#000000")
+          section(data-background="#000000").genadi
             h1.light Какво <u>няма</u> да има в нашата презентация?
 
           section.genadi
@@ -96,7 +96,7 @@ html(lang="en")
 
         section
 
-          section(data-background="#000000")
+          section(data-background="#000000").genadi
             h1.light Защо автоматизация?
 
           section.genadi
@@ -104,7 +104,7 @@ html(lang="en")
             p Станимир мрази да конфигурира сървъри.
             p.fragment Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.
 
-          section
+          section.genadi
             p: img(class="inline" src="http://420placehold.it/meme/400-400")
             h1 IT SUCKS BIG TIME!!!
 
@@ -136,7 +136,7 @@ html(lang="en")
 
         section
 
-          section(data-background="#000000")
+          section(data-background="#000000").genadi
             h1.light Време за демо
 
           section(data-background="#000000").genadi
@@ -161,10 +161,10 @@ html(lang="en")
 
         section
 
-          section(data-background="#000000")
+          section(data-background="#000000").genadi
             h1.light Какво автоматизирахме?
 
-          section
+          section.genadi
             h2 Едно &ldquo;малко&rdquo; <nobr>Python приложение</nobr>
             pre
               code.python(data-trim).
@@ -172,14 +172,14 @@ html(lang="en")
                     start_response('200 OK', [('Content-Type', 'text/html')])
                     return [b"Hello Rogue!"]
 
-          section
+          section.genadi
             ul
               li Nginx (from PPA)
               li Python 3.2, <code>pip</code>
               li uWSGI (application server)
               li Upstart jobs
 
-          section
+          section.stan
             h3 А преди това&hellip;
             ul
               li Ubuntu 12.04, x64
@@ -206,7 +206,6 @@ html(lang="en")
                 pre
                   code.yml(data-trim).
                     - name: Install packages
-                      sudo: true
                       apt: >
                         pkg={{ item }}
                         state=present
@@ -214,22 +213,6 @@ html(lang="en")
                         - 'python{{ python_version }}'
                         - 'python{{ python_version }}-dev'
 
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    package { ["python${version}", "python${version}-dev"]: }
-
-                    -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
-                      path   => ['/usr/bin', '/bin'],
-                      unless => "which pip 2>&1 1>/dev/null"
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на Python
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
                     - name: Check if pip is installed
                       command: >
                         which {{ pip_executable }}
@@ -237,24 +220,7 @@ html(lang="en")
                       changed_when: false
                       ignore_errors: true
 
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    package { ["python${version}", "python${version}-dev"]: }
-
-                    -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
-                      path   => ['/usr/bin', '/bin'],
-                      unless => "which pip 2>&1 1>/dev/null"
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на Python
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
                     - name: Install pip
-                      sudo: true
                       shell: >
                         wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | {{ python_executable }}
                       when: pip_installed | failed
@@ -262,7 +228,13 @@ html(lang="en")
               div.right
                 pre
                   code.puppet(data-trim).
-                    package { ["python${version}", "python${version}-dev"]: }
+                    package {
+                      [
+                        "python${version}",
+                        "python${version}-dev"
+                      ]:
+                    }
+
 
                     -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
                       path   => ['/usr/bin', '/bin'],
@@ -276,11 +248,27 @@ html(lang="en")
                 pre
                   code.yml(data-trim).
                     - name: Insall uWSGI
-                      sudo: true
                       pip: >
                         executable={{ pip_executable }}
                         name=uwsgi
                         state=present
+
+                    - name: Install Upstart script for uWSGI Emperor
+                      template: src=uwsgi.conf.j2 dest=/etc/init/uwsgi.conf
+
+                    - name: Create uWSGI Emperor configuration directory
+                      file: >
+                        path=/etc/uwsgi/vassals/
+                        state=directory recurse=yes
+
+                    - name: Create vassal configuration
+                      template: >
+                        src=vassal.ini.j2
+                        dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
+                      notify: restart uwsgi
+
+                    - name: Start uWSGI Emperor
+                      service: name=uwsgi state=started
 
               div.right
                 pre
@@ -290,21 +278,7 @@ html(lang="en")
                       require  => Package['build-essential']
                     }
 
-          section(data-transition="none")
-            h2 Конфигуриране на uWSGI
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
-                    - name: Install Upstart script for uWSGI Emperor
-                      sudo: true
-                      template: >
-                        src=uwsgi.conf.j2
-                        dest=/etc/init/uwsgi.conf
 
-              div.right
-                pre
-                  code.puppet(data-trim).
                     file {
                       '/etc/init/uwsgi.conf':
                         source => 'puppet:///modules/uwsgi/uwsgi.conf';
@@ -317,84 +291,7 @@ html(lang="en")
                         notify  => Service['uwsgi'];
                     }
 
-          section(data-transition="none")
-            h2 Конфигуриране на uWSGI
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
-                    - name: Create uWSGI Emperor configuration directory
-                      sudo: true
-                      file: >
-                        path=/etc/uwsgi/vassals/
-                        state=directory
-                        recurse=yes
 
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    file {
-                      '/etc/init/uwsgi.conf':
-                        source => 'puppet:///modules/uwsgi/uwsgi.conf';
-
-                      ['/etc/uwsgi', '/etc/uwsgi/vassals']:
-                        ensure => directory;
-
-                      "/etc/uwsgi/vassals/${vassal_name}.ini":
-                        content => template('uwsgi/vassal.ini.erb'),
-                        notify  => Service['uwsgi'];
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на uWSGI
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
-                    - name: Create vassal configuration
-                      sudo: true
-                      template: >
-                        src={{ item }}
-                        dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
-                      with_first_found:
-                        - files: [uwsgi.ini.j2]
-                          paths: ../../../host_files/{{ inventory_hostname }}/
-                        - files: [uwsgi.ini.j2]
-                          paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
-                        - files: [vassal.ini.j2]
-                          paths: ../templates/
-                      notify: restart uwsgi
-
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    file {
-                      '/etc/init/uwsgi.conf':
-                        source => 'puppet:///modules/uwsgi/uwsgi.conf';
-
-                      ['/etc/uwsgi', '/etc/uwsgi/vassals']:
-                        ensure => directory;
-
-                      "/etc/uwsgi/vassals/${vassal_name}.ini":
-                        content => template('uwsgi/vassal.ini.erb'),
-                        notify  => Service['uwsgi'];
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на uWSGI
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
-                    - name: Start uWSGI Emperor
-                      sudo: true
-                      service: >
-                        name=uwsgi
-                        state=started
-
-              div.right
-                pre
-                  code.puppet(data-trim).
                     service { 'uwsgi':
                       ensure  => running,
                       enable  => true,
@@ -422,6 +319,9 @@ html(lang="en")
                   code.puppet(data-trim).
                     apt::ppa { 'ppa:nginx/stable': }
 
+
+
+
                     -> package { 'nginx':
                       ensure => latest
                     }
@@ -433,70 +333,18 @@ html(lang="en")
                 pre
                   code.yml(data-trim).
                     - name: Create site configuration
-                      sudo: true
                       template: >
-                        src={{ item }}
+                        src=site.conf.j2
                         dest=/etc/nginx/sites-available/{{ nginx_site_name }}
-                      with_first_found:
-                        - files: [nginx.conf.j2]
-                          paths: ../../../host_files/{{ inventory_hostname }}/
-                        - files: [nginx.conf.j2]
-                          paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
-                        - files: [site.conf.j2]
-                          paths: ../templates/
                       notify: restart nginx
 
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    file {
-                      '/etc/nginx/sites-enabled/default':
-                        ensure => absent;
-
-                      "/etc/nginx/sites-enabled/${site_name}":
-                        ensure => link,
-                        target => "/etc/nginx/sites-available/${site_name}";
-
-                      "/etc/nginx/sites-available/${site_name}":
-                        content => template('nginx/site.conf.erb')
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на Nginx
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
                     - name: Disable default site
-                      sudo: true
                       file: >
                         path=/etc/nginx/sites-enabled/default
                         state=absent
                       notify: restart nginx
 
-              div.right
-                pre
-                  code.puppet(data-trim).
-                    file {
-                      '/etc/nginx/sites-enabled/default':
-                        ensure => absent;
-
-                      "/etc/nginx/sites-enabled/${site_name}":
-                        ensure => link,
-                        target => "/etc/nginx/sites-available/${site_name}";
-
-                      "/etc/nginx/sites-available/${site_name}":
-                        content => template('nginx/site.conf.erb')
-                    }
-
-          section(data-transition="none")
-            h2 Конфигуриране на Nginx
-            div.code-split
-              div.left
-                pre
-                  code.yml(data-trim).
                     - name: Enable custom site
-                      sudo: true
                       file: >
                         path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
                         src=/etc/nginx/sites-available/{{ nginx_site_name }}
@@ -518,6 +366,12 @@ html(lang="en")
                         content => template('nginx/site.conf.erb')
                     }
 
+                    File {
+                      require => Package['nginx'],
+                      notify  => Service['nginx']
+                    }
+
+
           section(data-transition="none")
             h2 Конфигуриране на Nginx
             div.code-split
@@ -525,7 +379,6 @@ html(lang="en")
                 pre
                   code.yml(data-trim).
                     - name: Start nginx
-                      sudo: true
                       service: >
                         name=nginx
                         state=started
@@ -598,7 +451,6 @@ html(lang="en")
                 strong Защо не Chef?
                 br
                 p Нищо лично, но нямаме опит с него, вероятно е cool.
-
 
     script(src="vendor/reveal.js/lib/js/head.min.js")
     script(src="vendor/reveal.js/js/reveal.js")

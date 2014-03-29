@@ -37,64 +37,71 @@
 .reveal .code-split .right pre { margin: 0; width: 100%; box-sizing: border-box; }
 .reveal .code-split .left pre code,
 .reveal .code-split .right pre, code { max-height: auto; min-height: 720px; }
-</style></head><body><div class="reveal"><div class="slides"><section data-transition="none"><p><img src="assets/images/automate.jpg" style="min-width: 100%;" class="inline"></p></section><section><section data-background="#000000"><h1 class="light">Кои сме ние?</h1></section><section class="genadi"><h2>Генади Самоковаров</h2><h3><a href="http://github.com/gsamokovarov">@gsamokovarov</a></h3><br><p><a href="http://gsamokovarov.com"><img src="assets/images/genadi.png" class="inline spin"></a></p></section><section class="stan"><h2>Стан{,имир} Ангело{в,ff}</h2><h3><a href="http://github.com/StanAngeloff">@StanAngeloff</a></h3><br><ul><li>Пише код.</li><li>Обича <strike>бяло</strike> червено вино <strike>(без мярка)</strike>.</li><li>Не търпи глупави хора.</li></ul></section><section data-background="#000000"><h1 class="light">Какво <u>няма</u> да има в нашата презентация?</h1></section><section class="genadi"><h2>Няма да говорим за build&nbsp;tools.</h2><br><p>Това не е презентация за:</p><ul><li><code>make</code>, <code>rake</code>, <code>grunt</code></li><li><code>gulp</code></li></ul><br><br><p><em>whatever you crazy kids use these days&hellip;</em></p></section></section><section><section data-background="#000000"><h1 class="light">Защо автоматизация?</h1></section><section class="genadi"><p>Генади мрази да конфигурира сървъри.</p><p>Станимир мрази да конфигурира сървъри.</p><p class="fragment">Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.</p></section><section><p><img src="http://420placehold.it/meme/400-400" class="inline"></p><h1>IT SUCKS BIG TIME!!!</h1></section><section data-background="#000000" class="stan"><h2 class="light">Мит: Автоматизация само за големи проекти</h2></section><section class="stan"><p><img src="http://420placehold.it/meme/400-400" style="min-width: 100%;" class="inline"></p><aside class="notes">Не, не е, нашето демо ще 3 реда код на Python.
+</style></head><body><div class="reveal"><div class="slides"><section data-transition="none"><p><img src="assets/images/automate.jpg" style="min-width: 100%;" class="inline"></p></section><section><section data-background="#000000"><h1 class="light">Кои сме ние?</h1></section><section class="genadi"><h2>Генади Самоковаров</h2><h3><a href="http://github.com/gsamokovarov">@gsamokovarov</a></h3><br><p><a href="http://gsamokovarov.com"><img src="assets/images/genadi.png" class="inline spin"></a></p></section><section class="stan"><h2>Стан{,имир} Ангело{в,ff}</h2><h3><a href="http://github.com/StanAngeloff">@StanAngeloff</a></h3><br><ul><li>Пише код.</li><li>Обича <strike>бяло</strike> червено вино <strike>(без мярка)</strike>.</li><li>Не търпи глупави хора.</li></ul></section><section data-background="#000000" class="genadi"><h1 class="light">Какво <u>няма</u> да има в нашата презентация?</h1></section><section class="genadi"><h2>Няма да говорим за build&nbsp;tools.</h2><br><p>Това не е презентация за:</p><ul><li><code>make</code>, <code>rake</code>, <code>grunt</code></li><li><code>gulp</code></li></ul><br><br><p><em>whatever you crazy kids use these days&hellip;</em></p></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Защо автоматизация?</h1></section><section class="genadi"><p>Генади мрази да конфигурира сървъри.</p><p>Станимир мрази да конфигурира сървъри.</p><p class="fragment">Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.</p></section><section class="genadi"><p><img src="http://420placehold.it/meme/400-400" class="inline"></p><h1>IT SUCKS BIG TIME!!!</h1></section><section data-background="#000000" class="stan"><h2 class="light">Мит: Автоматизация само за големи проекти</h2></section><section class="stan"><p><img src="http://420placehold.it/meme/400-400" style="min-width: 100%;" class="inline"></p><aside class="notes">Не, не е, нашето демо ще 3 реда код на Python.
 Дори малък проект носи със себе си много dependencies, от OS-ниво до софтуер...
-</aside></section><section class="stan"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Когато машината и dependencies еволюират, много <nobr>по-лесно</nobr> е да ги документираш.</p><br><p class="fragment">Автоматизацията е като документация за машината&hellip; особено когато имате повече от една машина.</p></section><section class="genadi"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Reproducibility &mdash; няма разминаване в средите</p><p class="fragment">Генади работи с Python3, Стан с Python2</p><p class="fragment"><cite><em>Ама при мен работи?!</em></cite></p></section><section data-transition="none"><p><img src="assets/images/flip.png" style="min-width: 100%;" class="inline"></p></section></section><section><section data-background="#000000"><h1 class="light">Време за демо</h1></section><section data-background="#000000" class="genadi"><h2 class="light">Puppet</h2><p class="light"><big>★</big> 1, 971 stars</p><p class="light"><big>⟳</big> 15688 commits</p><p class="light"><big>&nbsp;</big> 276 releases</p><p class="light"><big>&nbsp;</big> 274 contributors</p></section><section data-background="#000000" class="genadi"><script type="text/javascript" src="https://asciinema.org/a/8502.js" id="asciicast-8502" data-size="medium" data-speed="2" async></script></section><section data-background="#000000" class="stan"><h2 class="light">Ansible</h2><p class="light"><big>★</big> 5, 276 stars</p><p class="light"><big>⟳</big> 9, 851 commits</p><p class="light"><big>&nbsp;</big> 35 releases</p><p class="light"><big>&nbsp;</big> 644 contributors</p></section><section data-background="#000000" class="stan"><script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="4" async></script></section></section><section><section data-background="#000000"><h1 class="light">Какво автоматизирахме?</h1></section><section><h2>Едно &ldquo;малко&rdquo; <nobr>Python приложение</nobr></h2><pre><code data-trim class="python">def application(env, start_response):
+</aside></section><section class="stan"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Когато машината и dependencies еволюират, много <nobr>по-лесно</nobr> е да ги документираш.</p><br><p class="fragment">Автоматизацията е като документация за машината&hellip; особено когато имате повече от една машина.</p></section><section class="genadi"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Reproducibility &mdash; няма разминаване в средите</p><p class="fragment">Генади работи с Python3, Стан с Python2</p><p class="fragment"><cite><em>Ама при мен работи?!</em></cite></p></section><section data-transition="none"><p><img src="assets/images/flip.png" style="min-width: 100%;" class="inline"></p></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Време за демо</h1></section><section data-background="#000000" class="genadi"><h2 class="light">Puppet</h2><p class="light"><big>★</big> 1, 971 stars</p><p class="light"><big>⟳</big> 15688 commits</p><p class="light"><big>&nbsp;</big> 276 releases</p><p class="light"><big>&nbsp;</big> 274 contributors</p></section><section data-background="#000000" class="genadi"><script type="text/javascript" src="https://asciinema.org/a/8502.js" id="asciicast-8502" data-size="medium" data-speed="2" async></script></section><section data-background="#000000" class="stan"><h2 class="light">Ansible</h2><p class="light"><big>★</big> 5, 276 stars</p><p class="light"><big>⟳</big> 9, 851 commits</p><p class="light"><big>&nbsp;</big> 35 releases</p><p class="light"><big>&nbsp;</big> 644 contributors</p></section><section data-background="#000000" class="stan"><script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="4" async></script></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Какво автоматизирахме?</h1></section><section class="genadi"><h2>Едно &ldquo;малко&rdquo; <nobr>Python приложение</nobr></h2><pre><code data-trim class="python">def application(env, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
     return [b"Hello Rogue!"]
-    </code></pre></section><section><ul><li>Nginx (from PPA)</li><li>Python 3.2, <code>pip</code></li><li>uWSGI (application server)</li><li>Upstart jobs</li></ul></section><section><h3>А преди това&hellip;</h3><ul><li>Ubuntu 12.04, x64</li><li>SSH server</li><li>Reasonable security</li><li>Date/time, locale, etc.</li><li><code>build-essential</code></li></ul><br><br><p class="fragment">&hellip;за три реда код.</p></section><section><p><img src="http://420placehold.it/meme/400-400" style="min-width: 100%;" class="inline"></p></section></section><section><section data-background="#000000"><h1 class="light">Време за код</h1></section><section data-transition="none"><h2>Конфигуриране на Python</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Install packages
-  sudo: true
+    </code></pre></section><section class="genadi"><ul><li>Nginx (from PPA)</li><li>Python 3.2, <code>pip</code></li><li>uWSGI (application server)</li><li>Upstart jobs</li></ul></section><section class="stan"><h3>А преди това&hellip;</h3><ul><li>Ubuntu 12.04, x64</li><li>SSH server</li><li>Reasonable security</li><li>Date/time, locale, etc.</li><li><code>build-essential</code></li></ul><br><br><p class="fragment">&hellip;за три реда код.</p></section><section><p><img src="http://420placehold.it/meme/400-400" style="min-width: 100%;" class="inline"></p></section></section><section><section data-background="#000000"><h1 class="light">Време за код</h1></section><section data-transition="none"><h2>Конфигуриране на Python</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Install packages
   apt: >
     pkg={{ item }}
     state=present
   with_items:
     - 'python{{ python_version }}'
     - 'python{{ python_version }}-dev'
-    </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { ["python${version}", "python${version}-dev"]: }
-
--> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
-  path   => ['/usr/bin', '/bin'],
-  unless => "which pip 2>&1 1>/dev/null"
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Python</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Check if pip is installed
+    
+- name: Check if pip is installed
   command: >
     which {{ pip_executable }}
   register: pip_installed
   changed_when: false
   ignore_errors: true
-  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { ["python${version}", "python${version}-dev"]: }
-
--> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
-  path   => ['/usr/bin', '/bin'],
-  unless => "which pip 2>&1 1>/dev/null"
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Python</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Install pip
-  sudo: true
+  
+- name: Install pip
   shell: >
     wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | {{ python_executable }}
   when: pip_installed | failed
-  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { ["python${version}", "python${version}-dev"]: }
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package {
+  [
+    "python${version}",
+    "python${version}-dev"
+  ]:
+}
+
 
 -> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
   path   => ['/usr/bin', '/bin'],
   unless => "which pip 2>&1 1>/dev/null"
 }
 </code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Insall uWSGI
-  sudo: true
   pip: >
     executable={{ pip_executable }}
     name=uwsgi
     state=present
-    </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { 'uwsgi':
+    
+- name: Install Upstart script for uWSGI Emperor
+  template: src=uwsgi.conf.j2 dest=/etc/init/uwsgi.conf
+  
+- name: Create uWSGI Emperor configuration directory
+  file: >
+    path=/etc/uwsgi/vassals/
+    state=directory recurse=yes
+    
+- name: Create vassal configuration
+  template: >
+    src=vassal.ini.j2
+    dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
+  notify: restart uwsgi
+  
+- name: Start uWSGI Emperor
+  service: name=uwsgi state=started
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { 'uwsgi':
   provider => 'pip',
   require  => Package['build-essential']
 }
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Install Upstart script for uWSGI Emperor
-  sudo: true
-  template: >
-    src=uwsgi.conf.j2
-    dest=/etc/init/uwsgi.conf
-    </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+
+
+file {
   '/etc/init/uwsgi.conf':
     source => 'puppet:///modules/uwsgi/uwsgi.conf';
     
@@ -105,53 +112,9 @@
     content => template('uwsgi/vassal.ini.erb'),
     notify  => Service['uwsgi'];
 }
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create uWSGI Emperor configuration directory
-  sudo: true
-  file: >
-    path=/etc/uwsgi/vassals/
-    state=directory
-    recurse=yes
-    </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
-  '/etc/init/uwsgi.conf':
-    source => 'puppet:///modules/uwsgi/uwsgi.conf';
-    
-  ['/etc/uwsgi', '/etc/uwsgi/vassals']:
-    ensure => directory;
-    
-  "/etc/uwsgi/vassals/${vassal_name}.ini":
-    content => template('uwsgi/vassal.ini.erb'),
-    notify  => Service['uwsgi'];
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create vassal configuration
-  sudo: true
-  template: >
-    src={{ item }}
-    dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
-  with_first_found:
-    - files: [uwsgi.ini.j2]
-      paths: ../../../host_files/{{ inventory_hostname }}/
-    - files: [uwsgi.ini.j2]
-      paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
-    - files: [vassal.ini.j2]
-      paths: ../templates/
-  notify: restart uwsgi
-  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
-  '/etc/init/uwsgi.conf':
-    source => 'puppet:///modules/uwsgi/uwsgi.conf';
-    
-  ['/etc/uwsgi', '/etc/uwsgi/vassals']:
-    ensure => directory;
-    
-  "/etc/uwsgi/vassals/${vassal_name}.ini":
-    content => template('uwsgi/vassal.ini.erb'),
-    notify  => Service['uwsgi'];
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Start uWSGI Emperor
-  sudo: true
-  service: >
-    name=uwsgi
-    state=started
-    </code></pre></div><div class="right"><pre><code data-trim class="puppet">service { 'uwsgi':
+
+
+service { 'uwsgi':
   ensure  => running,
   enable  => true,
   require => [Package['uwsgi'], File['/etc/init/uwsgi.conf']]
@@ -167,52 +130,25 @@
     state=latest
     </code></pre></div><div class="right"><pre><code data-trim class="puppet">apt::ppa { 'ppa:nginx/stable': }
 
+
+
+
 -> package { 'nginx':
   ensure => latest
 }
 </code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create site configuration
-  sudo: true
   template: >
-    src={{ item }}
+    src=site.conf.j2
     dest=/etc/nginx/sites-available/{{ nginx_site_name }}
-  with_first_found:
-    - files: [nginx.conf.j2]
-      paths: ../../../host_files/{{ inventory_hostname }}/
-    - files: [nginx.conf.j2]
-      paths: "{{ ( '../../../group_files/' + ( group_names | join(';../../../group_files/') ) ).split(';') }}"
-    - files: [site.conf.j2]
-      paths: ../templates/
   notify: restart nginx
-  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
-  '/etc/nginx/sites-enabled/default':
-    ensure => absent;
-    
-  "/etc/nginx/sites-enabled/${site_name}":
-    ensure => link,
-    target => "/etc/nginx/sites-available/${site_name}";
-    
-  "/etc/nginx/sites-available/${site_name}":
-    content => template('nginx/site.conf.erb')
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Disable default site
-  sudo: true
+  
+- name: Disable default site
   file: >
     path=/etc/nginx/sites-enabled/default
     state=absent
   notify: restart nginx
-  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
-  '/etc/nginx/sites-enabled/default':
-    ensure => absent;
-    
-  "/etc/nginx/sites-enabled/${site_name}":
-    ensure => link,
-    target => "/etc/nginx/sites-available/${site_name}";
-    
-  "/etc/nginx/sites-available/${site_name}":
-    content => template('nginx/site.conf.erb')
-}
-</code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Enable custom site
-  sudo: true
+  
+- name: Enable custom site
   file: >
     path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
     src=/etc/nginx/sites-available/{{ nginx_site_name }}
@@ -229,8 +165,13 @@
   "/etc/nginx/sites-available/${site_name}":
     content => template('nginx/site.conf.erb')
 }
+
+File {
+  require => Package['nginx'],
+  notify  => Service['nginx']
+}
+
 </code></pre></div></div></section><section data-transition="none"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Start nginx
-  sudo: true
   service: >
     name=nginx
     state=started
