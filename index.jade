@@ -13,6 +13,18 @@ html(lang="en")
     link(rel="stylesheet", href="vendor/github.css")
 
     style.
+
+      #person {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+      }
+
+      #person.genadi { background-color: red; }
+      #person.stan { background-color: lime; }
+
       .reveal,
       .reveal h1,
       .reveal h2,
@@ -26,9 +38,6 @@ html(lang="en")
       .reveal h3 { font-size: 1.8em; }
       .reveal h4 { font-size: 1.5em; }
       .reveal h5 { font-size: 1.2em; }
-
-      .reveal .genadi { background-color: red; }
-      .reveal .stan { background-color: blue; }
 
       .reveal .light { color: #fff; }
       .reveal .big { font-size: 1.9em; }
@@ -94,19 +103,31 @@ html(lang="en")
             br
             p: em whatever you crazy kids use these days&hellip;
 
+          section(data-background="#000000").stan
+            h1.light Какво <u>ще има</u> в нашата презентация?
+
+          section.stan
+            h2 Ще говорим за автоматизиране на съвръри.
+            p.fragment Всекидневни задачи,
+            p.fragment Дълги и досадни задачи,
+            p.fragment &hellip;или как да си подкарам Ruby-то на съвръра.
+
         section
 
           section(data-background="#000000").genadi
             h1.light Защо автоматизация?
 
-          section.genadi
+          section( data-transition="none").genadi
             p Генади мрази да конфигурира сървъри.
             p Станимир мрази да конфигурира сървъри.
             p.fragment Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.
 
-          section.genadi
-            p: img(class="inline" src="http://420placehold.it/meme/400-400")
-            h1 IT SUCKS BIG TIME!!!
+          section(data-background="assets/images/batman.png").genadi
+            h1.light IT SUCKS BIG TIME!!!
+            br
+            br
+            br
+            br
 
           section(data-background="#000000").stan
             h2.light Мит: Автоматизация само за големи проекти
@@ -452,8 +473,12 @@ html(lang="en")
                 br
                 p Нищо лично, но нямаме опит с него, вероятно е cool.
 
+    div.indicator
+      div#person
+
     script(src="vendor/reveal.js/lib/js/head.min.js")
     script(src="vendor/reveal.js/js/reveal.js")
+    script(src="vendor/jquery.js")
 
     script.
       Reveal.initialize({
@@ -477,3 +502,13 @@ html(lang="en")
           }
         ]
       });
+
+      var previous = null, $person = $('#person');
+      setInterval(function() {
+        var $present = $('section.present');
+        if ($present.hasClass('genadi') && previous !== 'genadi') {
+          $person.removeClass(previous).addClass(previous = 'genadi');
+        } else if ($present.hasClass('stan') && previous !== 'stan') {
+          $person.removeClass(previous).addClass(previous = 'stan');
+        }
+      }, 125);
