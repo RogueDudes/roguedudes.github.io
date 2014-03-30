@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Automate ALL THE THINGS!!!</title><meta name="description" content="Git Tricks"><meta name="author" content="Genadi Samokovarov"><link rel="stylesheet" href="vendor/reveal.js/css/reveal.css"><link rel="stylesheet" href="vendor/reveal.js/css/theme/simple.css"><link rel="stylesheet" href="vendor/github.css"><style>#person {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+#person.genadi { background-color: red; }
+#person.stan { background-color: lime; }
+
+.reveal,
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 { font-family: Palatino, Georgia, serif; }
+
+.reveal h1 { font-size: 2.2em; text-shadow: none; }
+.reveal h2 { font-size: 1.9em; }
+.reveal h3 { font-size: 1.8em; }
+.reveal h4 { font-size: 1.5em; }
+.reveal h5 { font-size: 1.2em; }
+
+.reveal .light { color: #fff; }
+.reveal .big { font-size: 1.9em; }
+
+.reveal pre.inline { box-shadow: none; }
+.reveal img.inline { background: transparent; border: 0; box-shadow: none; margin: 0; vertical-align: middle; }
+
+.reveal a.image { text-decoration: none; }
+.reveal a:hover img.inline { background: transparent; border: 0; box-shadow: none; }
+
+.reveal .hidden { visibility: hidden; }
+
+.reveal .progress span { background: #666; }
+
+.reveal pre code { font-size: 150%; line-height: 100%; }
+
+.reveal .code-split { overflow: hidden; }
+.reveal .code-split .left { float: left; width: 49.5%; }
+.reveal .code-split .right { float: right; width: 49.5%; }
+.reveal .code-split .left pre,
+.reveal .code-split .right pre { margin: 0; width: 100%; box-sizing: border-box; }
+.reveal .code-split .left pre code,
+.reveal .code-split .right pre, code { max-height: auto; min-height: 720px; }
+</style></head><body><div class="reveal"><div class="slides"><section data-transition="none"><p><img src="assets/images/automate.jpg" style="min-width: 100%;" class="inline"></p></section><section><section data-background="#000000"><h1 class="light">Кои сме ние?</h1></section><section class="genadi"><h2>Генади Самоковаров</h2><h3><a href="http://github.com/gsamokovarov">@gsamokovarov</a></h3><br><p><a href="http://gsamokovarov.com"><img src="assets/images/genadi.png" class="inline spin"></a></p></section><section class="stan"><h2>Стан{,имир} Ангело{в,ff}</h2><h3><a href="http://github.com/StanAngeloff">@StanAngeloff</a></h3><br><ul><li>Пише код.</li><li>Обича <strike>бяло</strike> червено вино <strike>(без мярка)</strike>.</li><li>Не търпи глупави хора.</li></ul></section><section data-background="#000000" class="genadi"><h1 class="light">Какво <u>няма</u> да има в нашата презентация?</h1></section><section class="genadi"><h2>Няма да говорим за build&nbsp;tools.</h2><br><p>Това не е презентация за:</p><ul><li><code>make</code>, <code>rake</code>, <code>grunt</code></li><li><code>gulp</code></li></ul><br><br><p><em>whatever you crazy kids use these days&hellip;</em></p></section><section data-background="#000000" class="stan"><h1 class="light">Какво <u>ще има</u> в нашата презентация?</h1></section><section class="stan"><h2>Ще говорим за автоматизиране на съвръри.</h2><p class="fragment">Всекидневни задачи,</p><p class="fragment">Дълги и досадни задачи,</p><p class="fragment">&hellip;или как да си подкарам Ruby-то на съвръра.</p></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Защо автоматизация?</h1></section><section data-transition="none" class="genadi"><p>Генади мрази да конфигурира сървъри.</p><p>Станимир мрази да конфигурира сървъри.</p><p class="fragment">Генади и Станимир <strong>много мразят</strong> да конфигурират сървъри.</p></section><section data-background="assets/images/batman.png" class="genadi"><h1 class="light">IT SUCKS BIG TIME!!!</h1><br><br><br><br></section><section data-background="#000000" class="stan"><h2 class="light">Мит: Автоматизация само за големи проекти</h2></section><section data-background="assets/images/hellno.jpg" class="stan"><aside class="notes">Не, не е, нашето демо ще 3 реда код на Python.
+Дори малък проект носи със себе си много dependencies, от OS-ниво до софтуер...
+</aside></section><section class="stan"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Когато машината и dependencies еволюират, много <nobr>по-лесно</nobr> е да ги документираш.</p><br><p class="fragment">Автоматизацията е като документация за машината&hellip; особено когато имате повече от една машина.</p></section><section class="genadi"><h1>Защо автоматизация? <small>(продължение&hellip;)</small></h1><br><p class="fragment">Reproducibility &mdash; няма разминаване в средите</p><p class="fragment">Генади работи с Python3, Стан с Python2</p><p class="fragment"><cite><em>Ама при мен работи?!</em></cite></p></section><section><p><img src="assets/images/flip.png" style="min-width: 100%;" class="inline"></p></section></section><section data-transition="none"><section data-background="#000000" data-transition="none" class="stan"><h1 class="light">Време за демо</h1></section><section data-background="#000000" class="stan"><h2 class="light">Ansible</h2><p class="light"><big>★</big> 5, 276 stars</p><p class="light"><big>⟳</big> 9, 851 commits</p><p class="light"><big>&nbsp;</big> 35 releases</p><p class="light"><big>&nbsp;</big> 644 contributors</p></section><section data-background="#000000" class="stan"><script type="text/javascript" src="https://asciinema.org/a/8452.js" id="asciicast-8452" data-size="big" data-speed="16" async></script></section><section data-background="#000000" class="genadi"><h2 class="light">Puppet</h2><p class="light"><big>★</big> 1, 971 stars</p><p class="light"><big>⟳</big> 15688 commits</p><p class="light"><big>&nbsp;</big> 276 releases</p><p class="light"><big>&nbsp;</big> 274 contributors</p></section><section data-background="#000000" class="genadi"><script type="text/javascript" src="https://asciinema.org/a/8545.js" id="asciicast-8545" data-size="big" data-speed="16" async></script></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Какво автоматизирахме?</h1></section><section class="genadi"><h2>Едно &ldquo;малко&rdquo; <nobr>Python приложение</nobr></h2><pre><code data-trim class="python">def application(env, start_response):
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    return [b"Hello Rogue!"]
+    </code></pre></section><section class="genadi"><ul><li>Nginx (from PPA)</li><li>Python 3.2, <code>pip</code></li><li>uWSGI (application server)</li><li>Upstart jobs</li></ul></section><section class="stan"><h3>А преди това&hellip;</h3><ul><li>Ubuntu 12.04, x64</li><li>SSH server</li><li>Reasonable security</li><li>Date/time, locale, etc.</li><li><code>build-essential</code></li></ul><br><br><p class="fragment">&hellip;за три реда код.</p></section><section data-background="assets/images/crying.gif" class="stan"><h2 class="light">Y U NO<br>INSTALL YOURSELF</h2><br><br><br></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Време за код</h1></section><section data-transition="none" class="genadi"><h2>Конфигуриране на Python</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Install packages
+  apt: >
+    pkg={{ item }}
+    state=present
+  with_items:
+    - 'python{{ python_version }}'
+    - 'python{{ python_version }}-dev'
+    
+- name: Check if pip is installed
+  command: >
+    which {{ pip_executable }}
+  register: pip_installed
+  changed_when: false
+  ignore_errors: true
+  
+- name: Install pip
+  shell: >
+    wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | {{ python_executable }}
+  when: pip_installed | failed
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package {
+  [
+    "python${version}",
+    "python${version}-dev"
+  ]:
+}
+
+
+-> exec { "wget -qO- https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python${version}":
+  path   => ['/usr/bin', '/bin'],
+  unless => "which pip 2>&1 1>/dev/null"
+}
+</code></pre></div></div></section><section data-transition="none" class="stan"><h2>Конфигуриране на uWSGI</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Insall uWSGI
+  pip: >
+    executable={{ pip_executable }}
+    name=uwsgi
+    state=present
+    
+- name: Install Upstart script for uWSGI Emperor
+  template: src=uwsgi.conf.j2 dest=/etc/init/uwsgi.conf
+  
+- name: Create uWSGI Emperor configuration directory
+  file: >
+    path=/etc/uwsgi/vassals/
+    state=directory recurse=yes
+    
+- name: Create vassal configuration
+  template: >
+    src=vassal.ini.j2
+    dest=/etc/uwsgi/vassals/{{ uwsgi_vassal_name }}.ini
+  notify: restart uwsgi
+  
+- name: Start uWSGI Emperor
+  service: name=uwsgi state=started enabled=yes
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">package { 'uwsgi':
+  provider => 'pip',
+  require  => Package['build-essential']
+}
+
+
+file {
+  '/etc/init/uwsgi.conf':
+    source => 'puppet:///modules/uwsgi/uwsgi.conf';
+    
+  ['/etc/uwsgi', '/etc/uwsgi/vassals']:
+    ensure => directory;
+    
+  "/etc/uwsgi/vassals/${vassal_name}.ini":
+    content => template('uwsgi/vassal.ini.erb'),
+    notify  => Service['uwsgi'];
+}
+
+
+service { 'uwsgi':
+  ensure  => running,
+  enable  => true,
+  require => [Package['uwsgi'], File['/etc/init/uwsgi.conf']]
+}
+</code></pre></div></div></section><section data-transition="none" class="stan"><h2>Инсталиране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: 'Add PPA for stable releases'
+  apt_repository:
+    repo='ppa:nginx/stable'
+    update_cache=true
+    
+- name: 'Install packages'
+  apt:
+    pkg=nginx
+    state=latest
+    </code></pre></div><div class="right"><pre><code data-trim class="puppet">apt::ppa { 'ppa:nginx/stable': }
+
+
+
+
+-> package { 'nginx':
+  ensure => latest
+}
+</code></pre></div></div></section><section data-transition="none" class="stan"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create site configuration
+  template: >
+    src=site.conf.j2
+    dest=/etc/nginx/sites-available/{{ nginx_site_name }}
+  notify: restart nginx
+  
+- name: Disable default site
+  file: >
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+  
+- name: Enable custom site
+  file: >
+    path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
+    src=/etc/nginx/sites-available/{{ nginx_site_name }}
+    state=link
+  notify: restart nginx
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+  '/etc/nginx/sites-enabled/default':
+    require => Package['nginx'],
+    notify  => Service['nginx'],
+    ensure  => absent;
+    
+  "/etc/nginx/sites-enabled/${site_name}":
+    require => Package['nginx'],
+    notify  => Service['nginx'],
+    ensure  => link,
+    target  => "/etc/nginx/sites-available/${site_name}";
+    
+  "/etc/nginx/sites-available/${site_name}":
+    require => Package['nginx'],
+    notify  => Service['nginx'],
+    content => template('nginx/site.conf.erb')
+}
+
+</code></pre></div></div></section><section data-transition="none" class="genadi"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Create site configuration
+  template: >
+    src=site.conf.j2
+    dest=/etc/nginx/sites-available/{{ nginx_site_name }}
+  notify: restart nginx
+  
+- name: Disable default site
+  file: >
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+  
+- name: Enable custom site
+  file: >
+    path=/etc/nginx/sites-enabled/{{ nginx_site_name }}
+    src=/etc/nginx/sites-available/{{ nginx_site_name }}
+    state=link
+  notify: restart nginx
+  </code></pre></div><div class="right"><pre><code data-trim class="puppet">file {
+  '/etc/nginx/sites-enabled/default':
+    ensure => absent;
+    
+  "/etc/nginx/sites-enabled/${site_name}":
+    ensure => link,
+    target => "/etc/nginx/sites-available/${site_name}";
+    
+  "/etc/nginx/sites-available/${site_name}":
+    content => template('nginx/site.conf.erb')
+}
+
+File {
+  require => Package['nginx'],
+  notify  => Service['nginx']
+}
+
+</code></pre></div></div></section><section data-transition="none" class="genadi"><h2>Конфигуриране на Nginx</h2><div class="code-split"><div class="left"><pre><code data-trim class="yml">- name: Start nginx
+  service: >
+    name=nginx
+    state=started
+    enabled=yes
+    </code></pre></div><div class="right"><pre><code data-trim class="puppet">service { 'nginx':
+  ensure  => running,
+  enable  => true,
+  require => Package['nginx']
+}
+</code></pre></div></div></section><section class="stan"><h2>Източници на Конфигурация</h2><div class="code-split fragment"><div class="left"><pre><code data-trim>roles/nginx/defaults/main.yml
+group_vars/webservers
+inventory/servers.ini
+Modules (Amazon, DO)
+Local Facts
+Playbook
+Environment
+Command-line</code></pre></div><div class="right"><pre><code data-trim>Hiera
+Facts
+Environment
+Global Variables?
+</code></pre></div></div></section><section class="genadi"><h2>И още малко&hellip;</h2><ul><li class="fragment"><p>Libraries / Repositories with re-usable code</p><p class="fragment">Нож с две остриета.</p></li><li class="fragment">Secure password &amp; secret management</li></ul></section></section><section><section data-background="#000000" class="genadi"><h1 class="light">Оправдания<br><small><nobr>(да не автоматизираме)</nobr></small></h1></section><section class="genadi"><p><cite><em>Ще отнеме много време да се направи.</em></cite></p></section><section class="genadi"><p><cite><em>Не е моя работа, има си devops, да се оправят.</em></cite></p></section><section class="stan"><p><img src="assets/images/is_it_worth_the_time.png" style="min-width: 100%;" class="inline"></p></section><section class="stan"><p><cite><em>Ще си ползвам Heroku-то, там всичко работи.</em></cite></p></section></section><section><section data-background="#000000"><h1 class="light">Ресурси</h1></section><section class="stan"><h2>Ansible</h2><br><ul><li><a href="http://docs.ansible.com/intro.html">Introduction</a></li><li><a href="http://docs.ansible.com/list_of_all_modules.html">Modules Reference</a></li><li><a href="https://galaxy.ansible.com/explore">Ansible Galaxy</a></li></ul></section><section class="genadi"><h2>Puppet</h2><br><ul><li><a href="http://docs.puppetlabs.com/">Документация</a></li><li><a href="https://forge.puppetlabs.com/">Puppet Forge</a></li><li><a href="http://librarian-puppet.com/">Librarian Puppet</a></li><li><a href="http://boxen.github.com/">Boxen</a></li></ul></section><section class="genadi"><h2>Oще</h2><br><ul><li><a href="https://github.com/RogueDudes/automate-all-the-things">RogueDudes/automate-all-the-things</a></li><li><a href="https://github.com/RogueDudes/roguedudes.github.io">RogueDudes/roguedudes.github.io</a></li><br><li><a http://redmonk.com/sogrady/2013/12/06/configuration-management-2013/>Community Metrics</a></li></ul></section></section><section data-background="#000000"><h1 class="light">Въпроси &nbsp;&amp;&nbsp; Отговори</h1><aside class="notes"><ul><li><strong>Защо не Bash скриптове?</strong><br><p>Голяма болка, особено когато скриптът стане 1, 000+ реда spaghetti code.</p><br><p>Idempotence е важен, това в Bash е ръчна задача и трябва вие да я предвидите.</p><p>Ако имате вече голямо library, започнете като го автоматизирате, но не оставяйте нещата до там.</p></li><li><strong>Защо не Chef?</strong><br><p>Нищо лично, но нямаме опит с него, вероятно е cool.</p></li></ul></aside></section></div></div><div class="indicator"><div id="person"></div></div><script src="vendor/reveal.js/lib/js/head.min.js"></script><script src="vendor/reveal.js/js/reveal.js"></script><script src="vendor/jquery.js"></script><script>Reveal.initialize({
+  width: 1440,
+  height: 1050,
+  margin: 0,
+  controls: false,
+  progress: true,
+  history: true,
+  center: true,
+  rollingLinks: true,
+  transition: 'linear',
+  backgroundTransition: 'none',
+  dependencies: [
+    {
+      src: 'vendor/reveal.js/plugin/highlight/highlight.js',
+      async: true,
+      callback: function() {
+        hljs.initHighlightingOnLoad();
+      }
+    }
+  ]
+});
+
+var previous = null, $person = $('#person');
+setInterval(function() {
+  var $present = $('section.present');
+  if ($present.hasClass('genadi') && previous !== 'genadi') {
+    $person.removeClass(previous).addClass(previous = 'genadi');
+  } else if ($present.hasClass('stan') && previous !== 'stan') {
+    $person.removeClass(previous).addClass(previous = 'stan');
+  }
+}, 125);</script></body></html>
